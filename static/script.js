@@ -10,7 +10,7 @@ async function sendMessage() {
     showTyping();
 
     try {
-        const res = await fetch('/api/chat', {
+        const res = await fetch('https://ai-customerservice-lianok.up.railway.app/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: message })
