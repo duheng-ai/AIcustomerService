@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火脸AI智能助手</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="logo-box">
+        <img src="static/images/logo.svg" alt="火脸AI智能助手 Logo">
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox"></div>
+        <div class="input-box">
+            <input type="text" id="userInput" placeholder="请输入您的问题，按回车键快速发送，Shift+回车换行..." autocomplete="off">
+            <button onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
+    <div class="img-preview" id="imgPreview">
+        <img src="" id="previewImg" alt="预览大图">
+    </div>
+    <script src="static/script.js"></script>
+</body>
+</html>
