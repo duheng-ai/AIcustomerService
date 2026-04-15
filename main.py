@@ -22,8 +22,8 @@ app.add_middleware(
 )
 
 # 阿里云配置
-dashscope.api_key = "sk-5f3d3144330247c7a656dd045162e14a"
-APP_ID = "0b2ddb86a4384c348788d84179310c6e"
+dashscope.api_key = os.getenv("DASHSCOPE_API_KEY")
+APP_ID = os.getenv("APP_ID")
 
 # 接收前端JSON的模型
 class ChatRequest(BaseModel):
