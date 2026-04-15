@@ -1,96 +1,49 @@
-let typingElement = null;
+import os
+import sys, io
 
-async function sendMessage() {
-    const input = document.getElementById('userInput');
-    const message = input.value.trim();
-    if (!message) return;
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-    appendMessage(message, 'user');
-    input.value = '';
-    showTyping();
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+import dashscope
+from dashscope import Application
 
-    try {
-        const res = await fetch('https://ai-customerservice-lianok.up.railway.app/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: message })
-        });
+app = FastAPI()
 
-        const data = await res.json();
-        hideTyping();
+# ---------------- 跨域全开（解决你100%的问题）
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-        if (data.code === 200) {
-            appendMessage(data.data, 'ai');
-        } else {
-            appendMessage('错误：' + data.detail, 'ai');
-        }
-    } catch (err) {
-        hideTyping();
-        appendMessage('服务连接失败，请检查后端是否启动！', 'ai');
-        console.error(err);
-    }
-}
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-function showTyping() {
-    const chatBox = document.getElementById('chatBox');
-    typingElement = document.createElement('div');
-    typingElement.className = 'message-wrapper';
-    typingElement.innerHTML = `
-        <div class="avatar ai">火</div>
-        <div class="typing">
-            <span></span><span></span><span></span>
-        </div>
-    `;
-    chatBox.appendChild(typingElement);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
+# 阿里云密钥
+dashscope.api_key = os.getenv("DASHSCOPE_API_KEY")
+APP_ID = os.getenv("APP_ID")
 
-function hideTyping() {
-    if (typingElement) {
-        typingElement.remove();
-        typingElement = null;
-    }
-}
+# 首页
+@app.get("/")
+async def index():
+    return FileResponse("index.html")
 
-function appendMessage(content, type) {
-    const chatBox = document.getElementById('chatBox');
-    const wrapper = document.createElement('div');
-    wrapper.className = `message-wrapper ${type}`;
+# 聊天接口
+class ChatRequest(BaseModel):
+    message: str
 
-    let html = content;
-    html = html.replace(/!\[.*?\]\((https?:\/\/.*?)\)/g, (m, url) =>
-        `<img src="${url}" onclick="showPreview('${url}')" alt="点击放大">`
-    );
-    html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-    html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-    html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
-    html = html.replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
-    html = html.replace(/\n{3,}/g, '<br>');
-    html = html.replace(/\n{2,}/g, '<br><br>');
-    html = html.replace(/\n/g, '<br>');
-
-    wrapper.innerHTML = `
-        <div class="avatar ${type}">${type === 'ai' ? '火' : 'U'}</div>
-        <div class="message ${type}">${html}</div>
-    `;
-
-    chatBox.appendChild(wrapper);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function showPreview(url) {
-    const preview = document.getElementById('imgPreview');
-    document.getElementById('previewImg').src = url;
-    preview.style.display = 'flex';
-}
-
-document.getElementById('imgPreview').onclick = function() {
-    this.style.display = 'none';
-};
-
-document.getElementById('userInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-    }
-});
+@app.post("/api/chat")
+async def chat(req: ChatRequest):
+    try:
+        response = Application.call(
+            app_id=APP_ID,
+            prompt=req.message
+        )
+        return {"code": 200, "data": response.output.text}
+    except Exception as e:
+        return {"code": 500, "data": "出错：" + str(e)}
