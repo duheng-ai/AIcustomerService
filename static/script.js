@@ -57,34 +57,7 @@ function appendMessage(content, type) {
     const wrapper = document.createElement('div');
     wrapper.className = `message-wrapper ${type}`;
 
-    // 安全处理：统一转换为字符串，避免 undefined / null / 对象报错
     let html = content;
-    if (html == null) {
-        html = '';
-    } else if (typeof html !== 'string') {
-        if (typeof html === 'object') {
-            if (html.type === 'image' && html.url) {
-                html = `![image](${html.url})`;
-            } else if (html.image) {
-                html = `![image](${html.image})`;
-            } else if (html.url) {
-                html = `![image](${html.url})`;
-            } else {
-                try {
-                    html = JSON.stringify(html);
-                } catch (err) {
-                    html = String(html);
-                }
-            }
-        } else {
-            try {
-                html = JSON.stringify(html);
-            } catch (err) {
-                html = String(html);
-            }
-        }
-    }
-
     html = html.replace(/!\[.*?\]\((https?:\/\/.*?)\)/g, (m, url) =>
         `<img src="${url}" onclick="showPreview('${url}')" alt="点击放大">`
     );
