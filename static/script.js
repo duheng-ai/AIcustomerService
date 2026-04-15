@@ -20,7 +20,7 @@ async function sendMessage() {
         hideTyping();
 
         if (data.code === 200) {
-            appendMessage(data.content, 'ai');
+            appendMessage(data.data, 'ai');
         } else {
             appendMessage('错误：' + data.detail, 'ai');
         }
