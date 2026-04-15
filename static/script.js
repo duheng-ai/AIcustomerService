@@ -20,10 +20,9 @@ async function sendMessage() {
         hideTyping();
 
         if (data.code === 200) {
-            const reply = data.content ?? data.data ?? 'AI 回复为空';
-            appendMessage(reply, 'ai');
+            appendMessage(data.content, 'ai');
         } else {
-            appendMessage('错误：' + (data.detail || '未知错误'), 'ai');
+            appendMessage('错误：' + data.detail, 'ai');
         }
     } catch (err) {
         hideTyping();
