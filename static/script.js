@@ -20,9 +20,9 @@ async function sendMessage() {
         hideTyping();
 
         if (data.code === 200) {
-            appendMessage(data.data, 'ai');
+            appendMessage(data.data || 'AI 回复为空', 'ai');
         } else {
-            appendMessage('错误：' + data.detail, 'ai');
+            appendMessage('错误：' + (data.detail || '未知错误'), 'ai');
         }
     } catch (err) {
         hideTyping();
@@ -57,7 +57,9 @@ function appendMessage(content, type) {
     const wrapper = document.createElement('div');
     wrapper.className = `message-wrapper ${type}`;
 
-    let html = content;
+    // 安全处理：防止 undefined / null 导致报错
+    let html = String(content || '');
+
     html = html.replace(/!\[.*?\]\((https?:\/\/.*?)\)/g, (m, url) =>
         `<img src="${url}" onclick="showPreview('${url}')" alt="点击放大">`
     );
