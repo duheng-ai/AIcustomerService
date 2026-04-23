@@ -94,12 +94,21 @@ document.getElementById('userInput').addEventListener('keydown', (e) => {
         sendMessage();
     }
 });
-document.querySelectorAll('.quick-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    // 获取按钮绑定的快捷文本
-    const quickText = btn.getAttribute('data-text');
-    // 填入输入框并发送
-    document.getElementById('userInput').value = quickText;
-    sendMessage();
-  });
+const quickTexts = [
+    "后台网址是什么 ",  // 第1个按钮
+    "收款单如何创建",  // 第2个按钮
+    "客服电话是多少"   // 第3个按钮
+];
+
+// 自动渲染按钮文字
+document.querySelectorAll('.quick-btn').forEach((btn, index) => {
+    // 从JS加载文字，HTML看不见
+    btn.textContent = quickTexts[index];
+
+    // 点击发送逻辑
+    btn.addEventListener('click', () => {
+        const text = quickTexts[index];
+        document.getElementById('userInput').value = text;
+        sendMessage();
+    });
 });
