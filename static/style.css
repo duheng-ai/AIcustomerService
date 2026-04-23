@@ -45,7 +45,7 @@ body {
     width: 100%;
     max-width: 850px;
     /* 核心：初始扁框（最小高度）+ 最大高度限制 + 居中适配 */
-    min-height: 180px; /* 初始扁框高度，可根据需求调整 */
+    min-height: 250px; /* 初始扁框高度，可根据需求调整 */
     max-height: calc(100vh - 140px); /* 内容增多时最大高度，避免溢出 */
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
