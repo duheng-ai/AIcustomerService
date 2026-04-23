@@ -17,40 +17,42 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    background-size: 200% 200%; /* 保留背景动画的基础配置 */
+    background-size: 200% 200%;
 }
 
 /* Logo区域 - 匹配参考图的品牌展示风格 */
 .logo-box {
     text-align: center;
-    margin-bottom: 40px; /* 加大间距，匹配参考图布局 */
-    transition: transform 0.3s ease; /* 保留原有hover动效 */
+    margin-bottom: 40px;
+    transition: transform 0.3s ease;
 }
 .logo-box:hover {
-    transform: translateY(-2px); /* 保留原有hover动效 */
+    transform: translateY(-2px);
 }
-.logo-box svg, /* 兼容svg/img两种Logo格式 */
+.logo-box svg,
 .logo-box img {
     width: 180px;
     height: auto;
     filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.15));
 }
 
-/* 聊天容器核心样式 - 参考图的卡片风格（圆角+阴影+渐变边框） */
+/* 聊天容器核心样式 - 关键修改：自适应高度 */
 .chat-container {
     width: 100%;
-    max-width: 800px; /* 匹配参考图输入框宽度比例 */
-    height: calc(100vh - 200px);
+    max-width: 800px;
+    /* 核心改动：初始最小高度（扁框），内容多了自动增高 */
+    min-height: 180px; /* 初始扁框高度，和参考图输入框匹配 */
+    max-height: calc(100vh - 200px); /* 最大高度限制，避免溢出屏幕 */
     background: #ffffff;
-    border-radius: 16px; /* 参考图同款大圆角 */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); /* 参考图轻阴影 */
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(255,255,255,0.8); /* 保留原有透明边框，提升兼容性 */
+    border: 1px solid rgba(255,255,255,0.8);
 }
-/* 渐变边框伪元素 - 完全复刻参考图的蓝紫渐变边框 */
+/* 渐变边框伪元素 */
 .chat-container::before {
     content: "";
     position: absolute;
@@ -63,11 +65,11 @@ body {
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     padding: 1px;
-    border-radius: 17px; /* 比容器大1px匹配边框宽度 */
+    border-radius: 17px;
     pointer-events: none;
 }
 
-/* 聊天内容区域 */
+/* 聊天内容区域 - 自适应高度 */
 .chat-box {
     flex: 1;
     padding: 24px;
@@ -76,9 +78,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    /* 初始无内容时，输入框贴顶部 */
+    justify-content: flex-start;
 }
 
-/* 滚动条美化 - 匹配整体轻量风格 */
+/* 滚动条美化 */
 .chat-box::-webkit-scrollbar {
     width: 8px;
 }
@@ -87,7 +91,7 @@ body {
     border-radius: 4px;
 }
 .chat-box::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #0072ff, #9d4edd); /* 渐变滚动条 */
+    background: linear-gradient(180deg, #0072ff, #9d4edd);
     border-radius: 4px;
 }
 
@@ -105,7 +109,7 @@ body {
     flex-direction: row-reverse;
 }
 
-/* 头像样式 - 匹配参考图渐变风格 */
+/* 头像样式 */
 .avatar {
     width: 40px;
     height: 40px;
@@ -119,16 +123,14 @@ body {
     color: white;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
-/* AI头像：参考图蓝紫渐变 */
 .avatar.ai {
     background: linear-gradient(135deg, #0072ff, #00c6ff);
 }
-/* 用户头像：参考图紫蓝渐变 */
 .avatar.user {
     background: linear-gradient(135deg, #9d4edd, #667eea);
 }
 
-/* 消息气泡 - 轻量化设计 */
+/* 消息气泡 */
 .message {
     padding: 12px 18px;
     border-radius: 18px;
@@ -137,21 +139,19 @@ body {
     word-wrap: break-word;
     flex: 1;
 }
-/* AI消息气泡：白底浅边框 */
 .message.ai {
     background: #ffffff;
     color: #333333;
     border: 1px solid #f0f2fa;
-    border-bottom-left-radius: 6px; /* 不对称圆角增加灵动性 */
+    border-bottom-left-radius: 6px;
 }
-/* 用户消息气泡：参考图渐变 */
 .message.user {
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
     color: white;
     border-bottom-right-radius: 6px;
 }
 
-/* 保留原有消息内图片/标题样式，避免功能丢失 */
+/* 消息内元素样式 */
 .message img {
     max-width: 220px;
     width: 100%;
@@ -168,13 +168,13 @@ body {
 .message h2 {
     font-size: 1.1em;
     margin: 6px 0 4px;
-    color: #667eea; /* 适配新主色 */
+    color: #667eea;
     font-weight: bold;
 }
 .message h3 {
     font-size: 1em;
     margin: 5px 0 3px;
-    color: #764ba2; /* 适配新主色 */
+    color: #764ba2;
     font-weight: bold;
 }
 .message ul {
@@ -185,7 +185,7 @@ body {
     margin: 2px 0;
 }
 
-/* 输入框区域 - 匹配参考图的输入区风格 */
+/* 输入框区域 */
 .input-box {
     display: flex;
     gap: 12px;
@@ -194,30 +194,29 @@ body {
     border-top: 1px solid #f0f2fa;
 }
 
-/* 输入框样式 - 兼容原有input选择器，避免失效 */
+/* 输入框样式 */
 input, #userInput {
     flex: 1;
     padding: 12px 18px;
     border: 1px solid #e8ebf5;
-    border-radius: 20px; /* 参考图胶囊型圆角 */
+    border-radius: 20px;
     font-size: 15px;
     outline: none;
     transition: all 0.2s ease;
     background: #fafbfd;
 }
-/* 输入框聚焦效果 - 匹配参考图渐变边框 */
 input:focus, #userInput:focus {
     border-color: #667eea;
     background: #ffffff;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
 
-/* 发送按钮 - 完全复刻参考图的主按钮样式 */
+/* 发送按钮 */
 button {
     padding: 12px 24px;
-    border-radius: 20px; /* 胶囊型圆角 */
+    border-radius: 20px;
     border: none;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); /* 参考图按钮渐变 */
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
     color: #ffffff;
     font-size: 14px;
     font-weight: 600;
@@ -229,16 +228,15 @@ button {
     transition: all 0.2s ease;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
-/* 按钮hover动效 - 参考图交互风格 */
 button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 button:active {
-    transform: translateY(0); /* 保留点击回弹效果 */
+    transform: translateY(0);
 }
 
-/* 保留打字动画样式，避免AI输入动效丢失 */
+/* 打字动画 */
 .typing {
     display: flex;
     gap: 4px;
@@ -246,13 +244,13 @@ button:active {
     background: #fff;
     border-radius: 18px;
     border-bottom-left-radius: 6px;
-    border: 1px solid #e8ebf5;
+    border: 1px solid #e8f4f8;
 }
 .typing span {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #667eea; /* 适配新主色 */
+    background: #667eea;
     animation: typing 1.4s infinite ease-in-out;
 }
 .typing span:nth-child(1) { animation-delay: -0.32s; }
@@ -263,16 +261,16 @@ button:active {
     40% { transform: scale(1); opacity: 1; }
 }
 
-/* 图片预览样式 - 适配整体风格 */
+/* 图片预览 */
 .img-preview {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* 保留vw单位，适配移动端 */
+    width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85); /* 保留原有透明度，提升体验 */
-    z-index: 9999; /* 提升层级，避免被遮挡 */
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
     justify-content: center;
     align-items: center;
     cursor: zoom-out;
@@ -281,7 +279,7 @@ button:active {
     max-width: 90%;
     max-height: 90%;
     border-radius: 12px;
-    box-shadow: 0 0 30px rgba(255,255,255,0.2); /* 保留阴影，提升质感 */
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
 
 /* 动画效果 */
@@ -292,10 +290,11 @@ button:active {
     }
 }
 
-/* 移动端适配 - 保证小屏体验 */
+/* 移动端适配 */
 @media (max-width: 768px) {
     .chat-container {
-        height: calc(100vh - 160px);
+        min-height: 150px; /* 移动端初始更扁 */
+        max-height: calc(100vh - 160px);
         max-width: 95%;
     }
     .input-box {
@@ -304,7 +303,6 @@ button:active {
     button {
         padding: 10px 20px;
     }
-    /* 补充移动端消息/头像适配 */
     .message-wrapper {
         max-width: 90%;
     }
