@@ -17,13 +17,19 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    background-size: 200% 200%; /* 保留背景动画的基础配置 */
 }
 
 /* Logo区域 - 匹配参考图的品牌展示风格 */
 .logo-box {
     text-align: center;
     margin-bottom: 40px; /* 加大间距，匹配参考图布局 */
+    transition: transform 0.3s ease; /* 保留原有hover动效 */
 }
+.logo-box:hover {
+    transform: translateY(-2px); /* 保留原有hover动效 */
+}
+.logo-box svg, /* 兼容svg/img两种Logo格式 */
 .logo-box img {
     width: 180px;
     height: auto;
@@ -42,7 +48,7 @@ body {
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    /* 参考图核心：渐变霓虹边框 */
+    border: 1px solid rgba(255,255,255,0.8); /* 保留原有透明边框，提升兼容性 */
 }
 /* 渐变边框伪元素 - 完全复刻参考图的蓝紫渐变边框 */
 .chat-container::before {
@@ -145,6 +151,40 @@ body {
     border-bottom-right-radius: 6px;
 }
 
+/* 保留原有消息内图片/标题样式，避免功能丢失 */
+.message img {
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 4px 0;
+    cursor: pointer;
+    border: 1px solid #eee;
+    transition: transform 0.2s ease;
+}
+.message img:hover {
+    transform: scale(1.02);
+}
+.message h2 {
+    font-size: 1.1em;
+    margin: 6px 0 4px;
+    color: #667eea; /* 适配新主色 */
+    font-weight: bold;
+}
+.message h3 {
+    font-size: 1em;
+    margin: 5px 0 3px;
+    color: #764ba2; /* 适配新主色 */
+    font-weight: bold;
+}
+.message ul {
+    padding-left: 16px;
+    margin: 4px 0;
+}
+.message li {
+    margin: 2px 0;
+}
+
 /* 输入框区域 - 匹配参考图的输入区风格 */
 .input-box {
     display: flex;
@@ -154,8 +194,8 @@ body {
     border-top: 1px solid #f0f2fa;
 }
 
-/* 输入框样式 - 去边框，轻量化 */
-#userInput {
+/* 输入框样式 - 兼容原有input选择器，避免失效 */
+input, #userInput {
     flex: 1;
     padding: 12px 18px;
     border: 1px solid #e8ebf5;
@@ -166,7 +206,7 @@ body {
     background: #fafbfd;
 }
 /* 输入框聚焦效果 - 匹配参考图渐变边框 */
-#userInput:focus {
+input:focus, #userInput:focus {
     border-color: #667eea;
     background: #ffffff;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
@@ -194,24 +234,54 @@ button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
+button:active {
+    transform: translateY(0); /* 保留点击回弹效果 */
+}
+
+/* 保留打字动画样式，避免AI输入动效丢失 */
+.typing {
+    display: flex;
+    gap: 4px;
+    padding: 10px 14px;
+    background: #fff;
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+    border: 1px solid #e8ebf5;
+}
+.typing span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #667eea; /* 适配新主色 */
+    animation: typing 1.4s infinite ease-in-out;
+}
+.typing span:nth-child(1) { animation-delay: -0.32s; }
+.typing span:nth-child(2) { animation-delay: -0.16s; }
+.typing span:nth-child(3) { animation-delay: 0s; }
+@keyframes typing {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+}
 
 /* 图片预览样式 - 适配整体风格 */
 .img-preview {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    align-items: center;
+    width: 100vw; /* 保留vw单位，适配移动端 */
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85); /* 保留原有透明度，提升体验 */
+    z-index: 9999; /* 提升层级，避免被遮挡 */
     justify-content: center;
-    z-index: 999;
+    align-items: center;
+    cursor: zoom-out;
 }
 .img-preview img {
     max-width: 90%;
     max-height: 90%;
     border-radius: 12px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.2); /* 保留阴影，提升质感 */
 }
 
 /* 动画效果 */
@@ -233,5 +303,17 @@ button:hover {
     }
     button {
         padding: 10px 20px;
+    }
+    /* 补充移动端消息/头像适配 */
+    .message-wrapper {
+        max-width: 90%;
+    }
+    .message {
+        font-size: 14px;
+    }
+    .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
     }
 }
