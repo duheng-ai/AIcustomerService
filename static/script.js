@@ -10,7 +10,7 @@ async function sendMessage() {
     showTyping();
 
     try {
-        const res = await fetch('https://ai-customerservice-lianok.up.railway.app/api/chat', {
+        const res = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: message })
@@ -70,7 +70,7 @@ function appendMessage(content, type) {
     html = html.replace(/\n/g, '<br>');
 
     wrapper.innerHTML = `
-        <div class="avatar ${type}">${type === 'ai' ? '火' : 'U'}</div>
+        <div class="avatar ${type}">${type === 'ai' ? '火' : '您'}</div>
         <div class="message ${type}">${html}</div>
     `;
 
@@ -93,4 +93,13 @@ document.getElementById('userInput').addEventListener('keydown', (e) => {
         e.preventDefault();
         sendMessage();
     }
+});
+document.querySelectorAll('.quick-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // 获取按钮绑定的快捷文本
+    const quickText = btn.getAttribute('data-text');
+    // 填入输入框并发送
+    document.getElementById('userInput').value = quickText;
+    sendMessage();
+  });
 });
