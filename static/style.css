@@ -8,7 +8,7 @@
 /* 粉色渐变背景 + 页面整体居中 */
 body {
     min-height: 100vh;
-    /* 定制粉色渐变（柔和粉到浅粉紫，更贴合参考图风格） */
+    /* 粉色渐变 */
     background: linear-gradient(135deg, #fdf2f8 0%, #fef7fb 50%, #fcf1f7 100%);
     padding: 20px;
     display: flex;
@@ -22,6 +22,41 @@ body {
 @keyframes bgShift {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
+}
+/* 新增：头部容器 - 控制logo和welcome左右布局 */
+.header-container {
+    width: 100%;
+    max-width: 850px; /* 和chat-container宽度保持一致 */
+    display: flex;
+    justify-content: space-between; /* 左右两端对齐 */
+    align-items: center; /* 垂直居中 */
+    margin-bottom: 20px; /* 和原logo-box的margin-bottom保持一致 */
+    padding-right: 70px;
+}
+
+/* 调整logo-box样式：移除原有margin-bottom，取消text-align */
+.logo-box {
+    /* text-align: center; 移除 */
+    /* margin-bottom: 20px; 移除 */
+    transition: transform 0.3s ease;
+}
+
+/* 调整welcome-container：移除原有padding */
+.welcome-container {
+    /* padding: 20px;  */
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+
+/* 移动端适配：保持布局适配 */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column; /* 移动端改为上下排列 */
+        align-items: flex-start; /* 移动端左对齐 */
+        gap: 10px; /* 移动端增加上下间距 */
+    }
+    .logo-box {
+        align-self: flex-end; /* 移动端logo仍居右 */
+    }
 }
 
 .logo-box {
@@ -38,6 +73,31 @@ body {
     width: 160px;
     height: auto;
     filter: drop-shadow(0 2px 8px rgba(255, 28, 109, 0.15));
+    opacity:0.5;
+}
+/* 容器样式：控制整体间距和排版 */
+.welcome-container {
+    padding: 20px; /* 内边距，避免文字贴边 */
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif; /* 无衬线字体，适配不同系统 */
+}
+/* 主标题样式 */
+.main-title {
+    font-size: 24px; /* 主标题字号 */
+    font-weight: bold; /* 中等字重，不夸张 */
+    color: #333; /* 主文字深灰色 */
+    line-height: 1.5; /* 行高，提升可读性 */
+    margin: 0 0 8px 0; /* 与副标题的间距 */
+}
+/* 高亮文字样式（Hi~） */
+.highlight-text {
+    color: #1E88E5; /* 蓝色高亮 */
+}
+/* 副标题样式 */
+.sub-title {
+    font-size: 14px; /* 副标题字号 */
+    color: #666; /* 浅灰色 */
+    line-height: 1.4;
+    margin: 0; /* 清除默认边距 */
 }
 
 /* 聊天容器：居中+初始扁框+自适应高度 */
@@ -56,10 +116,10 @@ body {
     flex-direction: column;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.8);
-    /* 渐变霓虹边框（可选，保留粉色系风格） */
+    /* 渐变霓虹边框 */
     position: relative;
 }
-/* 粉色系渐变边框（和背景/按钮配色统一） */
+/* 粉色系渐变边框 */
 .chat-container::before {
     content: "";
     position: absolute;
@@ -291,7 +351,7 @@ button:active {
     border-radius: 12px;
     box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
-/* 👇 新增：快捷选项容器样式 */
+/* 快捷选项容器样式 */
 .quick-options {
   display: flex;
   gap: 8px;
