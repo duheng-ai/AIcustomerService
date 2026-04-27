@@ -8,7 +8,7 @@
 /* 粉色渐变背景 + 页面整体居中 */
 body {
     min-height: 100vh;
-    /* 粉色渐变 */
+    /* 定制粉色渐变（柔和粉到浅粉紫，更贴合参考图风格） */
     background: linear-gradient(135deg, #fdf2f8 0%, #fef7fb 50%, #fcf1f7 100%);
     padding: 20px;
     display: flex;
@@ -41,21 +41,21 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* 调整welcome-container：移除原有padding */
+/* 调整welcome-container：移除原有padding（可选，根据视觉需求调整） */
 .welcome-container {
-    /* padding: 20px;  */
+    /* padding: 20px; 移除（如需保留可调整为padding: 0;） */
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
 }
 
 /* 移动端适配：保持布局适配 */
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column; /* 移动端改为上下排列 */
+        flex-direction: column; /* 移动端改为上下排列（可选，也可保持row） */
         align-items: flex-start; /* 移动端左对齐 */
         gap: 10px; /* 移动端增加上下间距 */
     }
     .logo-box {
-        align-self: flex-end; /* 移动端logo仍居右 */
+        align-self: flex-end; /* 移动端logo仍居右（如果flex-direction为column） */
     }
 }
 
@@ -90,7 +90,7 @@ body {
 }
 /* 高亮文字样式（Hi~） */
 .highlight-text {
-    color: #1E88E5; /* 蓝色高亮 */
+    color: #1E88E5; /* 蓝色高亮（可根据需求调整） */
 }
 /* 副标题样式 */
 .sub-title {
@@ -116,10 +116,10 @@ body {
     flex-direction: column;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.8);
-    /* 渐变霓虹边框 */
+    /* 渐变霓虹边框（可选，保留粉色系风格） */
     position: relative;
 }
-/* 粉色系渐变边框 */
+/* 粉色系渐变边框（和背景/按钮配色统一） */
 .chat-container::before {
     content: "";
     position: absolute;
@@ -351,7 +351,7 @@ button:active {
     border-radius: 12px;
     box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
-/* 快捷选项容器样式 */
+/*新增：快捷选项容器样式 */
 .quick-options {
   display: flex;
   gap: 8px;
