@@ -222,14 +222,14 @@ body {
     /* 用户消息气泡匹配粉色系渐变 */
     background: linear-gradient(135deg, #117df8, #0da0f5 100%);
     color: white;
-    border-bottom-right-radius: 6px;
+    border-bottom-right-radius: 18px;
 }
 
 .message.ai {
     background: #ffffff;
     color: #333;
     border: 1px solid #e8ebf5;
-    border-bottom-left-radius: 6px;
+    border-bottom-left-radius: 18px;
 }
 
 .message img {
