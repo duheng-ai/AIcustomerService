@@ -41,9 +41,7 @@ function showTyping() {
     typingElement.className = 'message-wrapper';
     typingElement.innerHTML = `
         <div class="avatar ai">火</div>
-        <div class="typing">
-            <span></span><span></span><span></span>
-        </div>
+        <div class="typing">请稍等~~~</div>
     `;
     chatBox.appendChild(typingElement);
     chatBox.scrollTop = chatBox.scrollHeight;
