@@ -8,6 +8,8 @@ async function sendMessage() {
     document.querySelector('.chat-container').classList.add('expanded');
     appendMessage(message, 'user');
     input.value = '';
+    const header = document.querySelector('.header-container');
+    header.classList.add('header-container-hidden');
     showTyping();
 
     try {
@@ -30,8 +32,7 @@ async function sendMessage() {
         appendMessage('服务连接失败，请检查后端是否启动！', 'ai');
         console.error(err);
     }
-    const header = document.querySelector('.header-container');
-    header.classList.add('header-container-hidden');
+
 }
 
 function showTyping() {
