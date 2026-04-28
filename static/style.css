@@ -320,7 +320,7 @@ button:active {
     padding: 10px 14px;
     background: #fff;
     border-radius: 18px;
-    border-bottom-left-radius: 6px;
+    border-bottom-left-radius: 18px;
     border: 1px solid #e8ebf5;
     font-size: 15px;
     color: #333;
