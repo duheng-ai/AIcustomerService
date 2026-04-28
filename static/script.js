@@ -4,7 +4,7 @@ async function sendMessage() {
     const input = document.getElementById('userInput');
     const message = input.value.trim();
     if (!message) return;
-
+    document.querySelector('.chat-container').classList.add('expanded');
     appendMessage(message, 'user');
     input.value = '';
     showTyping();
@@ -94,10 +94,11 @@ document.getElementById('userInput').addEventListener('keydown', (e) => {
         sendMessage();
     }
 });
+// ====================== 快捷短语配置（这里改文字，前端看不见） ======================
 const quickTexts = [
-    "后台网址是什么 ",  // 第1个按钮
-    "收款单如何创建",  // 第2个按钮
-    "客服电话是多少"   // 第3个按钮
+    "哈哈哈哈1 ",  // 第1个按钮
+    "快捷信息2",  // 第2个按钮
+    "快捷信息3"   // 第3个按钮
 ];
 
 // 自动渲染按钮文字
